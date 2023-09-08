@@ -1,0 +1,384 @@
+openapi: 3.0.0
+info:
+  title: "REST API for MEC servers"
+  description: "An API about Edge Apllication Servers"
+  version: "1.0.0"
+
+
+servers:
+  - url: "/api/necs-eas-deployment/v1"
+
+security:
+  - ApiKeyAuth: []
+  - OAuth2: 
+      - read
+      - write
+
+paths:
+  /eas-instances:
+    get:
+      operationId: "eas-deployments.read_all"
+      tags: 
+        - EAS Request from ECS
+      summary: "Reads all available MEC application servers"
+      responses: 
+        "200":
+          description: "Successfully read all EAS instances"
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EasInfos'
+                minItems: 0
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    
+    post:
+      operationId: "eas-deployments.create"
+      tags:
+        - Create EAS Information deployment
+      summary: "Add new MEC infos"
+      requestBody:
+          description: "Deploy edge app infos to Core Network"
+          required: True
+          content:
+            application/json:
+              schema:
+                x-body-name: "easInfos"
+                $ref: "#/components/schemas/EasInfos"
+      responses:
+        '201':
+          description: 'Resource successfully added' 
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound' 
+
+  /eas-instances/{easId}:
+    get:
+      operationId: "eas-deployments.read_one"
+      tags:
+        - Individual EAS information
+      summary: "Read one Edge application information"
+      parameters:
+        - $ref: '#/components/parameters/easId'
+      responses:
+        "200":
+          description: "Successfully read EAS infos"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EasInfos'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound' 
+
+    patch:
+      tags:
+        - Individual EAS information
+      operationId: "eas-deployments.patch"
+      summary: "Update partially an EAS information"
+      parameters:
+        - $ref: "#/components/parameters/easId"
+      responses:
+        "200":
+          description: "Successfully updated EAS"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound' 
+      requestBody:
+        content:
+          application/merge-patch+json:
+            schema:
+              x-body-name: "easInfos"
+              $ref: "#/components/schemas/EasInfos"
+    put:
+      tags:
+        - Individual EAS information
+      operationId: "eas-deployments.update"
+      summary: "Update an EAS information"
+      parameters:
+        - $ref: "#/components/parameters/easId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              x-body-name: "easInfos"
+              $ref: "#/components/schemas/EasInfos"
+      responses:
+        "200":
+          description: "Successfully updated EAS"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EasInfos'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound' 
+      
+
+    delete:
+      tags:
+        - Individual EAS information
+      operationId: "eas-deployments.delete"
+      summary: "Delete an EAS"
+      parameters:
+        - $ref: "#/components/parameters/easId"
+      responses:
+        "204":
+          description: "The resource was successfully deleted"
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFound' 
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+    
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://example.com
+          tokenUrl: https://example.com
+          scopes:
+            read: Grants read access
+            write: Grants write access
+  schemas:
+    Dnai:
+      description: DNAI (Data network access identifier), see clause 5.6.7 of 3GPP TS 23.501.
+      type: string
+
+    DnsServerIdentifier:
+      description: Represents DNS server identifier (consisting of IP address and port)
+      type: object 
+      properties:
+        dnsServIpAddr:
+          $ref: '#/components/schemas/IpAddr'
+        portNumber:
+          $ref: '#/components/schemas/Uinteger'
+      required:
+        - dnsServIpAddr
+        - portNumber 
+    
+    BitRate:
+      type: string
+      pattern: '^\d+(\.\d+)? (bps|Kbps|Mbps|Gbps|Tbps)$'
+      description: >
+        String representing a bit rate; the prefixes follow the standard symbols from The International
+        System of Units, and represent x1000 multipliers, with the exception that prefix "K" is
+        used to represent the standard symbol "k".
+
+    IpAddr:
+      description: Contains an IP adresse.
+      type: object
+      oneOf:
+        - required:
+          - ipv4Addr
+        - required:
+          - ipv6Addr
+        - required:
+          - ipv6Prefix
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+
+    Ipv4Addr:
+      type: string
+      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$'
+      example: '198.51.100.1'
+      description: >
+        String identifying a IPv4 address formatted in the 'dotted decimal' notation
+        as defined in RFC 1166.
+
+    Ipv4AddrMask:
+      type: string
+      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$'
+      example: '198.51.0.0/16'
+      description: >
+        "String identifying a IPv4 address mask formatted in the 'dotted decimal' notation
+        as defined in RFC 1166."
+ 
+    Ipv6Addr:
+      type: string
+      allOf:
+        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$'
+        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$'
+      example: '2001:db8:85a3::8a2e:370:7334'
+      description: >
+        String identifying an IPv6 address formatted according to clause 4 of RFC5952.
+        The mixed IPv4 IPv6 notation according to clause 5 of RFC5952 shall not be used.
+
+    Ipv6Prefix:
+      type: string
+      allOf:
+        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$'
+        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)$'
+      example: '2001:db8:abcd:12::0/64'
+      description: >
+        String identifying an IPv6 address prefix formatted according to clause 4 of RFC 5952.
+        IPv6Prefix data type may contain an individual /128 IPv6 address.
+
+    MatchingOperator:
+      anyOf:
+        - type: string
+          enum:
+            - FULL_MATCH
+            - MATCH_ALL
+            - STARTS_WITH
+            - NOT_START_WITH
+            - ENDS_WITH
+            - NOT_END_WITH
+            - CONTAINS
+            - NOT_CONTAIN
+        - type: string
+      description: the matching operation.
+
+    StringMatchingRule:
+      description: A list of conditions for string matching
+      type: object
+      properties:
+        stringMatchingConditions:
+          type: array
+          items:
+            $ref: '#/components/schemas/StringMatchingCondition'
+          minItems: 1
+
+    StringMatchingCondition:
+      description: A String with Matching Operator
+      type: object
+      properties:
+        matchingString:
+          type: string
+        matchingOperator:
+          $ref: '#/components/schemas/MatchingOperator'
+      required:
+        - matchingOperator 
+
+# Simple data types and Enumerations
+    Uinteger:
+      type: integer
+      minimum: 0
+      description: Unsigned Integer, i.e. only value 0 and integers above 0 are permissible.
+
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: '^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$'
+      minLength: 4
+      maxLength: 253
+
+# Structure of EAS deployment
+    EasInfos:
+      description: Represents the EAS Deployment Information to be stored by ECS.
+      type: object
+      properties:
+        appId:
+          type: string
+        dnaiInfos:
+          type: object
+          items:
+            $ref: '#/components/schemas/DnaiInformation'
+          minProperties: 1
+          description: >
+            list of DNS server identifier (consisting of IP address and port) and/or IP address(s) 
+            of the EAS in the local DN for each DNAI. The key of map is the DNAI.
+        dnn: 
+          type: string
+        fqdnPatternList:
+          type: array
+          items:
+            $ref: '#/components/schemas/FqdnPatternMatchingRule'
+          minItems: 1
+        internalGroupId: 
+          type: string
+        snssai:
+          type: object
+        svcKpi:
+          $ref: '#/components/schemas/EASServiceKPI'
+      required:
+        - appId
+        - fqdnPatternList
+        - svcKpi
+    FqdnPatternMatchingRule:
+      description: matching rule for FQDN pattern
+      type: object
+      oneOf:
+        - required: [ regex ]
+        - required: [ stringMatchingRule ]
+      properties:
+        regex: 
+          type: string
+        stringMatchingRule:
+          $ref: '#/components/schemas/StringMatchingRule'
+    DnaiInformation:
+      description: DNAI information
+      type: object
+      properties:
+        dnai:
+          type: string
+        dnsServIds:
+          type: array
+          items:
+            $ref: '#/components/schemas/DnsServerIdentifier'
+          minItems: 1
+        easIpAddrs:
+          description: Represents IP addresses of an EAS server
+          type: array
+          items:
+            $ref: '#/components/schemas/IpAddr'
+          minItems: 1
+      required:
+        - dnai
+      anyOf:
+        - required: [ dnsServIds ]
+        - required: [ easIpAddrs ]
+    EASServiceKPI:
+      description: Represents the EAS service KPI information
+      properties:
+        maxReqRate:
+          $ref: '#/components/schemas/Uinteger'
+        maxRespTime:
+          $ref: '#/components/schemas/Uinteger'
+        avail:
+          $ref: '#/components/schemas/Uinteger'
+        avlComp: 
+          $ref: '#/components/schemas/Uinteger'
+        avlGraComp:
+          $ref: '#/components/schemas/Uinteger'
+        avlMem:
+          $ref: '#/components/schemas/Uinteger'
+        avlStrg:
+          $ref: '#/components/schemas/Uinteger'
+        connBand:
+          $ref: '#/components/schemas/BitRate'
+  responses:
+    NotFound:
+      description: 'Instance not found'
+    UnauthorizedError:
+      description: Access token is missing or invalid
+  parameters:
+    easId:
+      name: easId
+      description: EAS unique identifier
+      in: path
+      required: true
+      schema:
+        type: "string"

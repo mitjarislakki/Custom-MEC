@@ -1,0 +1,189 @@
+{
+   "Message": {
+      "timeStampGen": "2023-05-17T16:34:00+03:00",
+      "nfLoadLevelInfos": [
+         {
+            "nfType": "NRF",
+            "nfInstanceId": "8cfcf12f-c78f-4991-849c-a384ade14566",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "NWDAF",
+            "nfInstanceId": "fc127992-9d3d-4d42-bae6-10c674248550",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "NSACF",
+            "nfInstanceId": "3fa85f64-5717-4562-b3fc-2c963f66afbc",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "CUSTOM_CNC",
+            "nfInstanceId": "fc127992-9d3d-4d42-bae6-10c674248549",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "UDM",
+            "nfInstanceId": "7798a343-620e-428b-be1b-0f45109f14ee",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "UDR",
+            "nfInstanceId": "1198ee13-f5e7-4329-965e-c71a3e91d8d9",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "NSSF",
+            "nfInstanceId": "e98388d2-6fa8-49b7-a711-dfda0c2ae754",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "PCF",
+            "nfInstanceId": "56a84198-1481-4611-8fdf-3268468bb79a",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "AF",
+            "nfInstanceId": "af127992-9d3d-4d42-bae6-10c673298549",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "NEF",
+            "nfInstanceId": "75262547-8dfb-42cf-ac4d-25ed90a7e141",
+            "nfSetId": "127.0.0.5",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "AUSF",
+            "nfInstanceId": "ed657029-45e9-4e99-bfe1-d7a252685a37",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "UPF",
+            "nfInstanceId": "1ddc2ad0-512a-4418-a8bc-1ae07e614ffc",
+            "nfSetId": "127.0.0.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "SMF",
+            "nfInstanceId": "3fa85f64-5717-4562-b3fc-2c963f66afbb",
+            "nfSetId": "127.0.1.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         },
+         {
+            "nfType": "AMF",
+            "nfInstanceId": "3fa85f64-5717-4562-b3fc-2c963f66afba",
+            "nfSetId": "127.0.2.1",
+            "nfStatus": {
+               "StatusRegistered": 1,
+               "StatusUnregistered": 0,
+               "StatusUndiscoverable": 0
+            },
+            "snssais": {
+               "sst": 1
+            }
+         }
+      ]
+   },
+   "code": 202
+}

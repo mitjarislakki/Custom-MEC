@@ -1,0 +1,8 @@
+connexion[swagger-ui]
+connexion[uvicorn]
+Flask-PyMongo
+flask-bcrypt
+flask-cors
+flask-jwt-extended
+mongoengine
+pymongo[srv]

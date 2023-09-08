@@ -1,0 +1,245 @@
+openapi: 3.0.0
+info:
+  title: "REST API for MEC servers"
+  description: "An API about Edge Apllication Servers"
+  version: "1.0.0"
+
+servers:
+  - url: "/api/necs-eas-deployment/v1"
+  
+paths: {}
+
+components:
+  schemas:
+    InvalidParam:
+      type: object
+      properties:
+        param:
+          type: string
+          description: >
+            If the invalid parameter is an attribute in a JSON body, this IE shall contain the 
+            attribute's name and shall be encoded as a JSON Pointer. If the invalid parameter is 
+            an HTTP header, this IE shall be formatted as the concatenation of the string "header " 
+            plus the name of such header. If the invalid parameter is a query parameter, this IE 
+            shall be formatted as the concatenation of the string "query " plus the name of such 
+            query parameter. If the invalid parameter is a variable part in the path of a resource 
+            URI, this IE shall contain the name of the variable, including the symbols "{" and "}" 
+            used in OpenAPI specification as the notation to represent variable path segments.
+        reason:
+          type: string
+          description: >
+            A human-readable reason, e.g. "must be a positive integer". In cases involving failed 
+            operations in a PATCH request, the reason string should identify the operation that 
+            failed using the operation's array index to assist in correlation of the invalid 
+            parameter with the failed operation, e.g." Replacement value invalid for attribute 
+            (failed operation index= 4)"
+      required:
+        - param
+      description: It contains an invalid parameter and a related description.
+
+    ProblemDetails:
+      description: Provides additional information in an error response.
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/Uri'
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+          description: A human-readable explanation specific to this occurrence of the problem.
+        instance:
+          $ref: '#/components/schemas/Uri'
+        cause:
+          type: string
+          description: >
+            A machine-readable application error cause specific to this occurrence of the problem. 
+            This IE should be present and provide application-related error information, if
+            available.
+        invalidParams:
+          type: array
+          items:
+            $ref: '#/components/schemas/InvalidParam'
+          minItems: 1
+        #supportedFeatures:
+        #  $ref: '#/components/schemas/SupportedFeatures'
+        #accessTokenError:
+        #  $ref: 'TS29510_Nnrf_AccessToken.yaml#/components/schemas/AccessTokenErr'
+        #accessTokenRequest:
+        #  $ref: 'TS29510_Nnrf_AccessToken.yaml#/components/schemas/AccessTokenReq'
+        nrfId:
+          $ref: 'common-data.yml#/components/schemas/Fqdn'
+        supportedApiVersions:
+          type: array
+          items:
+            type: string
+          minItems: 1
+
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986
+    
+    RedirectResponse:
+      description: >
+        The response shall include a Location header field containing a different URI 
+        (pointing to a different URI of an other service instance), or the same URI if a request 
+        is redirected to the same target resource via a different SCP.
+      type: object
+      properties:
+        cause:
+          type: string
+        targetScp:
+          $ref: '#/components/schemas/Uri'
+        targetSepp:
+          $ref: '#/components/schemas/Uri'
+
+  responses:
+      '307':
+        description: Temporary Redirect
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RedirectResponse'
+        headers:
+          Location:
+            description: 'The URI pointing to the resource located on the redirect target'
+            required: true
+            schema:
+              type: string
+          3gpp-Sbi-Target-Nf-Id:
+            description: 'Identifier of target NF (service) instance towards which the request is redirected'
+            schema:
+              type: string
+      '308':
+        description: Permanent Redirect
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RedirectResponse'
+        headers:
+          Location:
+            description: 'The URI pointing to the resource located on the redirect target'
+            required: true
+            schema:
+              type: string
+          3gpp-Sbi-Target-Nf-Id:
+            description: >
+              'Identifier of target NF (service) instance towards which the request is redirected'
+            schema:
+              type: string
+      '400':
+        description: Bad request
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '401':
+        description: Unauthorized
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '403':
+        description: Forbidden
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '404':
+        description: Not Found
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '405':
+        description: Method Not Allowed
+      '408':
+        description: Request Timeout
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '406':
+        description: 406 Not Acceptable
+      '409':
+        description: Conflict
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '410':
+        description: Gone
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '411':
+        description: Length Required
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '412':
+        description: Precondition Failed
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '413':
+        description: Payload Too Large
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '414':
+        description: URI Too Long
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '415':
+        description: Unsupported Media Type
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '429':
+        description: Too Many Requests
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '500':
+        description: Internal Server Error
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '501':
+        description: Not Implemented
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '502':
+        description: Bad Gateway
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '503':
+        description: Service Unavailable
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      '504':
+        description: Gateway Timeout
+        content:
+          application/problem+json:
+            schema:
+              $ref: '#/components/schemas/ProblemDetails'
+      default:
+        description: Generic Error

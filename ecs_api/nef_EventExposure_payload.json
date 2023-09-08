@@ -1,0 +1,149 @@
+{
+    "dataAccProfId": "string",
+    "eventsSubs": [{
+        "event": "UE_MOBILITY",
+        "eventFilter": {
+            "tgtUe": {
+                "supis": [
+                    "string"
+                ],
+                "interGroupIds": [
+                    "string"
+                ],
+                "anyUeId": true
+            },
+            "appIds": [
+                "string"
+            ],
+            "locArea": {
+                "ncgis": [{
+                    "plmnId": {
+                        "mcc": "string",
+                        "mnc": "string"
+                    },
+                    "nrCellId": "string",
+                    "nid": "string"
+                }],
+                "gRanNodeIds": [{
+                    "plmnId": {
+                        "mcc": "string",
+                        "mnc": "string"
+                    },
+                    "gNbId": {
+                        "bitLength": 32,
+                        "gNBValue": "string"
+                    },
+                    "ngeNbId": "SMacroNGeNB-34B89",
+                    "wagfId": "string",
+                    "tngfId": "string",
+                    "nid": "string",
+                    "eNbId": "string"
+                }],
+                "tais": [{
+                    "plmnId": {
+                        "mcc": "string",
+                        "mnc": "string"
+                    },
+                    "tac": "string",
+                    "nid": "string"
+                }]
+            },
+            "collAttrs": [{
+                "type": "COLLECTIVE_ATTRIBUTE",
+                "value": "string",
+                "listOfUeInd": true
+            }]
+        }
+    }],
+    "eventsRepInfo": {
+        "immRep": true,
+        "notifMethod": "PERIODIC",
+        "maxReportNbr": 0,
+        "monDur": "2023-04-20T11:31:51.145Z",
+        "repPeriod": 0,
+        "sampRatio": 100,
+        "partitionCriteria": [
+            "TAC",
+            "string"
+        ],
+        "grpRepTime": 0,
+        "notifFlag": "ACTIVATE"
+    },
+    "notifUri": "string",
+    "notifId": "string",
+    "eventNotifs": [{
+        "event": "UE_MOBILITY",
+        "timeStamp": "2023-04-20T11:31:51.145Z",
+        "ueMobilityInfos": [{
+            "supi": "string",
+            "appId": "string",
+            "ueTrajs": [{
+                "ts": "2023-04-20T11:31:51.145Z",
+                "location": {
+                    "nrLocation": {
+                        "tai": {
+                            "plmnId": {
+                                "mcc": "string",
+                                "mnc": "string"
+                            },
+                            "tac": "string",
+                            "nid": "string"
+                        },
+                        "ncgi": {
+                            "plmnId": {
+                                "mcc": "string",
+                                "mnc": "string"
+                            },
+                            "nrCellId": "string",
+                            "nid": "string"
+                        },
+                        "ignoreNcgi": false,
+                        "ageOfLocationInformation": 32767,
+                        "ueLocationTimestamp": "2023-04-20T11:31:51.145Z",
+                        "geographicalInformation": "string",
+                        "geodeticInformation": "string",
+                        "globalGnbId": {
+                            "plmnId": {
+                                "mcc": "string",
+                                "mnc": "string"
+                            },
+                            "gNbId": {
+                                "bitLength": 32,
+                                "gNBValue": "string"
+                            },
+                            "ngeNbId": "SMacroNGeNB-34B89",
+                            "wagfId": "string",
+                            "tngfId": "string",
+                            "nid": "string",
+                            "eNbId": "string"
+                        }
+                    },
+                    "geraLocation": {
+                        "locationNumber": "string",
+                        "cgi": {
+                            "plmnId": {
+                                "mcc": "string",
+                                "mnc": "string"
+                            },
+                            "lac": "string",
+                            "cellId": "string"
+                        },
+                        "lai": {
+                            "plmnId": {
+                                "mcc": "string",
+                                "mnc": "string"
+                            },
+                            "lac": "string"
+                        },
+                        "vlrNumber": "string",
+                        "mscNumber": "string",
+                        "ageOfLocationInformation": 32767,
+                        "ueLocationTimestamp": "2023-04-20T11:31:51.146Z",
+                        "geographicalInformation": "string",
+                        "geodeticInformation": "string"
+                    }
+                }
+            }]
+        }]
+    }]
+}

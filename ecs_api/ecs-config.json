@@ -1,0 +1,30 @@
+{
+    "nfInstanceId": "3fa85f64-5717-4562-b3fc-2c963f699s3",
+    "nfInstanceName": "ECS",
+    "nfType": "AF",
+    "nfStatus": "REGISTERED",
+    "plmnList": [{
+        "mcc": "999",
+        "mnc": "98"
+    }],
+    "sNssais": [{
+            "sst": 1,
+            "sd": "00005"
+        },
+        {
+            "sst": 1,
+            "sd": "00004"
+        }
+    ],
+    "ipv4Addresses": [
+        "127.0.0.1"
+    ],
+    "ipv6Addresses": [
+        "2001:db8:85a3::8a2e:370:7334"
+    ],
+    "allowedPlmns": [{
+        "mcc": "999",
+        "mnc": "98"
+    }]
+
+}

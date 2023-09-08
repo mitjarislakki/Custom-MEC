@@ -1,0 +1,257 @@
+openapi: 3.0.0
+info:
+  title: "REST API for MEC servers"
+  description: "An API about Edge Apllication Servers"
+  version: "1.0.0"
+
+
+servers:
+  - url: "/api/necs-eas-deployment/v1"
+
+
+paths: {}
+
+components:
+  schemas:
+#
+# SIMPLE DATA TYPES 
+#
+    Dnai:
+      type: string
+      description: DNAI (Data network access identifier), see clause 5.6.7 of 3GPP TS 23.501.
+    
+    BitRate:
+      type: string
+      pattern: '^\d+(\.\d+)? (bps|Kbps|Mbps|Gbps|Tbps)$'
+      description: >
+        String representing a bit rate; the prefixes follow the standard symbols from The International
+        System of Units, and represent x1000 multipliers, with the exception that prefix "K" is
+        used to represent the standard symbol "k".
+
+    Binary:
+      format: binary
+      type: string
+      description: string with format 'binary' as defined in OpenAPI.
+
+    BinaryRm:
+      format: binary
+      type: string
+      nullable: true
+      description: "string with format 'binary' as defined in OpenAPI OpenAPI with 'nullable: true' property."
+
+    Bytes:
+      format: byte
+      type: string
+      description: string with format 'bytes' as defined in OpenAPI
+
+    BytesRm:
+      format: byte
+      type: string
+      nullable: true
+      description: >
+        string with format 'bytes' as defined in OpenAPI OpenAPI with 'nullable: true' property.
+
+    Date:
+      format: date
+      type: string
+      description: string with format 'date' as defined in OpenAPI.
+
+    DateRm:
+      format: date
+      type: string
+      nullable: true
+      description: >
+        string with format 'date' as defined in OpenAPI OpenAPI with 'nullable: true' property.
+
+    DateTime:
+      format: date-time
+      type: string
+      description: string with format 'date-time' as defined in OpenAPI.
+
+    DateTimeRm:
+      format: date-time
+      type: string
+      nullable: true
+      description: >
+        string with format 'date-time' as defined in OpenAPI with 'nullable:true' property. 
+
+    DiameterIdentity:
+      $ref: '#/components/schemas/Fqdn'
+
+    Float:
+      format: float
+      type: number
+      description: string with format 'float' as defined in OpenAPI.
+
+    FloatRm:
+      format: float
+      type: number
+      nullable: true
+      description: >
+        string with format 'float' as defined in OpenAPI with the OpenAPI defined
+        'nullable: true' property.
+
+    Int32:
+      format: int32
+      type: integer
+      description: string with format 'int32' as defined in OpenAPI.
+
+    Int32Rm:
+      format: int32
+      type: integer
+      nullable: true
+      description: >
+        string with format 'int32' as defined in OpenAPI with the OpenAPI defined
+        'nullable: true' property.
+
+    Int64:
+      type: integer
+      format: int64
+      description: string with format 'int64' as defined in OpenAPI.
+
+    Int64Rm:
+      format: int64
+      type: integer
+      nullable: true
+      description: >
+        string with format 'int64' as defined in OpenAPI with the OpenAPI defined
+        'nullable: true' property.
+
+    IpAddr:
+      description: Contains an IP adresse.
+      type: object
+      oneOf:
+        - required:
+          - ipv4Addr
+        - required:
+          - ipv6Addr
+        - required:
+          - ipv6Prefix
+      properties:
+        ipv4Addr:
+          $ref: '#/components/schemas/Ipv4Addr'
+        ipv6Addr:
+          $ref: '#/components/schemas/Ipv6Addr'
+        ipv6Prefix:
+          $ref: '#/components/schemas/Ipv6Prefix'
+
+    Ipv4Addr:
+      type: string
+      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$'
+      example: '198.51.100.1'
+      description: >
+        String identifying a IPv4 address formatted in the 'dotted decimal' notation
+        as defined in RFC 1166.
+
+    Ipv4AddrRm:
+      type: string
+      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])$'
+      example: '198.51.100.1'
+      nullable: true
+      description: >
+        String identifying a IPv4 address formatted in the 'dotted decimal' notation
+        as defined in RFC 1166 with the OpenAPI defined 'nullable: true' property.
+
+    Ipv4AddrMask:
+      type: string
+      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$'
+      example: '198.51.0.0/16'
+      description: >
+        "String identifying a IPv4 address mask formatted in the 'dotted decimal' notation
+        as defined in RFC 1166."
+
+    Ipv4AddrMaskRm:
+      type: string
+      pattern: '^(([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])\.){3}([0-9]|[1-9][0-9]|1[0-9][0-9]|2[0-4][0-9]|25[0-5])(\/([0-9]|[1-2][0-9]|3[0-2]))$'
+      example: '198.51.0.0/16'
+      nullable: true
+      description: >
+        String identifying a IPv4 address mask formatted in the 'dotted decimal' notation
+        as defined in RFC 1166 with the OpenAPI defined 'nullable: true' property.
+
+    Ipv6Addr:
+      type: string
+      allOf:
+        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$'
+        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$'
+      example: '2001:db8:85a3::8a2e:370:7334'
+      description: >
+        String identifying an IPv6 address formatted according to clause 4 of RFC5952.
+        The mixed IPv4 IPv6 notation according to clause 5 of RFC5952 shall not be used.
+
+    Ipv6AddrRm:
+      type: string
+      allOf:
+        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))$'
+        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))$'
+      example: '2001:db8:85a3::8a2e:370:7334'
+      nullable: true
+      description: >
+        String identifying an IPv6 address formatted according to clause 4 of RFC5952 with the
+        OpenAPI 'nullable: true' property.
+        The mixed IPv4 IPv6 notation according to clause 5 of RFC5952 shall not be used.
+
+    Ipv6Prefix:
+      type: string
+      allOf:
+        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$'
+        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)$'
+      example: '2001:db8:abcd:12::0/64'
+      description: >
+        String identifying an IPv6 address prefix formatted according to clause 4 of RFC 5952.
+        IPv6Prefix data type may contain an individual /128 IPv6 address.
+
+    Ipv6PrefixRm:
+      type: string
+      allOf:
+        - pattern: '^((:|(0?|([1-9a-f][0-9a-f]{0,3}))):)((0?|([1-9a-f][0-9a-f]{0,3})):){0,6}(:|(0?|([1-9a-f][0-9a-f]{0,3})))(\/(([0-9])|([0-9]{2})|(1[0-1][0-9])|(12[0-8])))$'
+        - pattern: '^((([^:]+:){7}([^:]+))|((([^:]+:)*[^:]+)?::(([^:]+:)*[^:]+)?))(\/.+)$'
+      nullable: true
+      description: >
+        String identifying an IPv6 address prefix formatted according to clause 4 of RFC 5952 with
+        the OpenAPI 'nullable: true' property. IPv6Prefix data type may contain an individual
+        /128 IPv6 address.
+
+    MacAddr48:
+      type: string
+      pattern: '^([0-9a-fA-F]{2})((-[0-9a-fA-F]{2}){5})$'
+      description: >
+        String identifying a MAC address formatted in the hexadecimal notation
+        according to clause 1.1 and clause 2.1 of RFC 7042.
+
+    
+    Uinteger:
+      type: integer
+      minimum: 0
+      description: Unsigned Integer, i.e. only value 0 and integers above 0 are permissible.
+
+    UintegerRm:
+      type: integer
+      minimum: 0
+      description: >
+        Unsigned Integer, i.e. only value 0 and integers above 0 are permissible with
+        the OpenAPI 'nullable: true' property.
+      nullable: true
+
+
+    Uri:
+      type: string
+      description: String providing an URI formatted according to RFC 3986.
+
+
+    Fqdn:
+      description: Fully Qualified Domain Name
+      type: string
+      pattern: '^([0-9A-Za-z]([-0-9A-Za-z]{0,61}[0-9A-Za-z])?\.)+[A-Za-z]{2,63}\.?$'
+      minLength: 4
+      maxLength: 253
+
+#
+# COMMON STRUCTURED DATA TYPES
+#
+      
+
+
+#
+# HTTP responses
+#    

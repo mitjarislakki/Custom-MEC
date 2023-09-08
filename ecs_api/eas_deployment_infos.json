@@ -1,0 +1,42 @@
+{
+    "appId": "f19a7b60-fab3-467b-b12a-7bb01588f514",
+    "dnaiInfos": {
+        "dnai": "",
+        "dnsServIds": [{
+            "dnsServIpAddr": {
+                "ipv4Addr": "127.0.0.1",
+                "ipv6Addr": "2001:db8:85a3::8a2e:370:7334"
+            },
+            "portNumber": 0
+        }],
+        "easIpAddrs": [{
+            "ipv4Addr": "127.0.0.1",
+            "ipv6Addr": "2001:db8:85a3::8a2e:370:7334"
+        }]
+    },
+    "dnn": "string",
+    "fqdnPatternList": [{
+        "regex": "string",
+        "stringMatchingRule": {
+            "stringMatchingConditions": [{
+                "matchingString": "string",
+                "matchingOperator": "FULL_MATCH"
+            }]
+        }
+    }],
+    "internalGroupId": "string",
+    "snssai": {
+        "sst": 255,
+        "sd": "string"
+    },
+    "svcKpi": {
+        "maxReqRate": 0,
+        "maxRespTime": 0,
+        "avail": 0,
+        "avlComp": 0,
+        "avlGraComp": 0,
+        "avlMem": 0,
+        "avlStrg": 0,
+        "connBand": "500 Tbps"
+    }
+}
