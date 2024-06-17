@@ -2,3 +2,4 @@ venv/
 .venv/
 __pycache__/
 eas_deployments/__pycache__/
+un.txt

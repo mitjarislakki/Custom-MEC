@@ -1,6 +1,6 @@
 pymongo==4.3.3
 connexion[flask,swagger-ui,uvicorn]==3.0.0a1
 Flask==2.2.3
-Flask-PyMongO==2.3.0
+Flask-PyMongo==2.3.0
 flask-mongoengine==1.0.0
 mongoengine==0.27.0
